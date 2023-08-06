@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import Toast from "react-native-toast-message";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { EntityKeys } from "src/redux/keys";
+import { RootState } from "../store";
 
 
 const initailValues = {
@@ -25,6 +26,7 @@ const initailValues = {
     },
     rememberMe: true,
     isGuest: false,
+    theme: "light"
 }
 
 const slice = createSlice({
@@ -37,14 +39,18 @@ const slice = createSlice({
         },
         doRemember: (state, action) => {
             state.rememberMe = action.payload
+        },
+        chnageTheme: (state, action) => {
+            state.theme = action.payload
         }
     },
     extraReducers(builder) {
 
     },
 })
-
+export const selectTheme = (state: RootState) => state.users.theme
 const User = {
-    slice
+    slice,
+    
 }
 export default User
