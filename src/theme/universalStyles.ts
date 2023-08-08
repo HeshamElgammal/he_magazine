@@ -1,10 +1,12 @@
 import {StyleSheet} from 'react-native';
+import { Colors } from './colors';
 
 const universalStyles = StyleSheet.create({
   containerView: {
     flex: 1,
-    justifyContent: 'center',
+    // justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor:Colors().FirstColor
   },
   row: {
     flexDirection: 'row',
