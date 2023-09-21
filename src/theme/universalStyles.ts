@@ -4,9 +4,9 @@ import { Colors } from './colors';
 const universalStyles = StyleSheet.create({
   containerView: {
     flex: 1,
-    // justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor:Colors().FirstColor
+    // alignItems: 'center',
+    backgroundColor:Colors().FirstColor,
+    
   },
   row: {
     flexDirection: 'row',

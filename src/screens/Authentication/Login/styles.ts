@@ -1,24 +1,82 @@
-import { StyleSheet } from 'react-native'
-import React from 'react'
+import { Platform, StyleSheet } from 'react-native'
 import { Colors } from 'theme/colors'
-import { pixelSizeHorizontal, pixelSizeVertical, theme } from 'theme/sizes'
-
-
-  
+import {   heightPixel, pixelSizeVertical, theme } from 'theme/sizes'
+import Fonts from 'theme/fonsFamily'
 
 
 export const loginStyles = StyleSheet.create({
-    forgotPassContainer:{
-        width:"100%",
-        // backgroundColor:Colors().FirstColor,
-        paddingHorizontal:pixelSizeHorizontal(18),
-        alignItems:"flex-end",
-        marginTop:pixelSizeVertical(10)
+    SafeAreaView: {
+        flex: 1,
+        backgroundColor: Colors().SecondColor,
     },
-    forgotPassText:{
-        fontSize:theme.TypographySize.xxmid,
-        color:Colors().SecondColor,
-        fontWeight:"500",
-        textDecorationLine:"underline"
+    MainContainer: {
+        flex: 1,
+        backgroundColor: Colors().FirstColor,
+    },
+    container: {
+        backgroundColor: Colors().SecondColor,
+        width: "100%",
+        height: Platform.OS === 'ios' ? heightPixel(62) : 0,
+    },
+    diveder: {
+        width: '70%',
+        height: 1,
+        backgroundColor: Colors().SecondColor,
+        marginTop: 50,
+        marginBottom: 15,
+        alignSelf: 'center'
+    },
+    RegisterText:
+    {
+        fontFamily: Fonts.PoppinsMedium,
+        textAlign: 'center',
+        fontSize: (13),
+        fontWeight: '500',
+        color: Colors().ThirdColor,
+        marginBottom: 20,
+    },
+    Social: {
+        height: 75,
+        width: 75,
+        borderRadius: 14,
+        borderWidth: 1,
+        borderColor: Colors().ThirdColor,
+        backgroundColor: Colors().SecondGrey,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    SocialContainer:
+    {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '100%',
+        marginTop: 15
+    },
+    LOGText:
+    {
+        fontFamily: Fonts.PoppinsMedium,
+        textAlign: 'center',
+        fontSize: (13),
+        fontWeight: '500',
+        color: Colors().ThirdColor,
+        marginTop: 25,
+    },
+    SLOGText: {
+        textDecorationLine: 'underline',
+        fontWeight: '700',
+    },
+    ForgotPassword: {
+        fontSize: (13),
+        fontWeight: '500',
+        textDecorationLine: 'underline',
+        textAlign: 'right',
+        marginTop: 15,
+        marginRight: 10,
+        color: Colors().SecondColor,
+        fontFamily: Fonts.PoppinsMedium
+    },
+    button: {
+        marginTop: pixelSizeVertical(35),
+        alignSelf: 'center'
     }
 })

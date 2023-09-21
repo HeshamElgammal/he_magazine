@@ -1,78 +1,32 @@
 export const login_initial_values = {
-    email: '',
-    password: '',
-};
-export const verify_initial_values = {
-    email: '',
-};
-export const verify_otp_initial_values = {
-    otp: '',
-};
-export const reset_password = {
-    password_confirmation: '',
-    password: '',
+    Email: '',
+    Password: '',
 };
 
-export const Register1_initial_values = {
-    email: '',
-    mobile: '',
-    password: '',
-    password_confirmation: '',
-    country_code:'EG'
+export const reset_initial_values = {
+    Email: '',
 };
 
-
-export const Complete_profile_initial_values = {
-    photo: null,
-    fullName: '',
-    dateOfBirth: {
-        day: 5,
-        month: 3,
-        year: 2023
-    },
-    country: null,
-    city: null,
-    gender: 'Male',
-    address: '',
-};
-export const Edit_profile_initial_values = {  
-    fullName: '',
-    mobile: '',
-    password: '',
-    password_confirmation: '',
-    dateOfBirth: {
-        day: 3,
-        month: 3,
-        year: 2023
-    },
-    country: null,
-    city: null,
-    gender: 'Male',
-    address: '',
-    country_code:"EG"
-
+export const OTP_initial_values = {
+    EnterOTPcode: '',
 };
 
-export const StatusIdentifyValues = {
-    one: "",
-    two: "",
-    three: "",
-    four: "",
-    five: ""
-}
-export const MedicalValues = {
-    one: "",
-    two: "",
-    three: "",
-    four: "",
-    five: ""
-}
+export const confirmPass_initial_values = {
+    Newpassword: '',
+    Confirmpassword: '',
+};
 
+export const signup_initial_values = {
+    Email: '',
+    Password: '',
+    Confirmpassword: '',
+    Mobilenumber: '',
+};
 
-export const AttendeesValues = {
-    number: { id: 1, name: "1" },
-    attendees: [{
-        name: "",
-        phone: ""
-    },]
-}
+export const CompleteSignup_initial_values = {
+    Fullname: '',
+    Gender: 'Male',
+    Dateofbirth: '',
+    Country: { id: 0, name: '' },
+    City: { id: 0, name: '' }
+};

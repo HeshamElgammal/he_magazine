@@ -1,11 +1,15 @@
 
 import { combineReducers } from "@reduxjs/toolkit";
 import loadingSlice from "./_loading";
-import User from "./User";
+import Auth from "./auth";
+import App from "./app";
+import tokenReducer from "./tokens/reducer";
 
 const combineReducer = combineReducers({
     _loading: loadingSlice.reducer,
-    [User.slice.name]: User.slice.reducer,
+    tokens: tokenReducer,
+    [Auth.slice.name]: Auth.slice.reducer,
+    [App.slice.name]: App.slice.reducer,
 })
 
 export default combineReducer

@@ -1,16 +1,16 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { fontPixel, theme } from 'theme/sizes'
+import { theme } from 'theme/sizes'
 import { Colors } from 'theme/colors'
+import Fonts from 'theme/fonsFamily'
+// import Fonts from 'theme/fonsFamily'
 
 
-const TextAuthRed = ({ text = "" }: { text: string }) => {
-
+const TextAuthRed = ({ text = "", title = "" }: { text: string, title?: string }) => {
     return (
         <View style={styles.container}>
-            <Text
-                style={[styles.text]}
-            >{text}</Text>
+            <Text style={[styles.text, { fontSize: title ? 24 : 40, }]}>{text}</Text>
+            {title && <Text style={styles.title}>{title}</Text>}
         </View>
     )
 }
@@ -23,9 +23,16 @@ const styles = StyleSheet.create({
         paddingHorizontal: theme.spacing.l,
     },
     text: {
-        fontSize: fontPixel(40),
-        fontWeight: "800",
-        marginTop: theme.spacing.m,
-        color: Colors().Red
+        // fontWeight: "800",
+        marginTop: 20,
+        color: Colors().Red,
+        fontFamily: Fonts.AkiraExpandedDemo
+    },
+    title: {
+        fontSize: (15),
+        fontFamily: Fonts.PoppinsMedium,
+        fontWeight: '500',
+        color: Colors().ThirdColor,
+        marginTop:8
     }
 })

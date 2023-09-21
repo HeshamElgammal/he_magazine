@@ -57,6 +57,7 @@ const theme = {
     l: 20,
     xl: 30,
     xxl: 40,
+    xxxl: 70,
   },
   radius: {
     max: 50,

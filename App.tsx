@@ -1,51 +1,50 @@
-import { SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StatusBar, } from 'react-native'
 import { PersistGate } from 'redux-persist/integration/react'
 import { Provider } from 'react-redux'
-import React from 'react'
-import { Store, useAppDispatch, useAppSelector } from 'src/redux/store'
-// import { GlobalStyle } from 'src/styles/global'
-import User, { selectTheme } from 'src/redux/User'
-import GlobalHeader from 'components/Header'
-import { Colors } from 'theme/colors'
-import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import Login from 'screens/Authentication/Login'
+import React, { useEffect } from 'react'
+import { Store, } from 'src/redux/store'
+import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context'
+import { NavigationContainer } from '@react-navigation/native'
+import RootStackScreens from 'navigation'
+import Toast from "react-native-toast-message";
+import CodePush from "react-native-code-push";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 
+
+let CodePushOptions = {
+  checkFrequency: CodePush.CheckFrequency.MANUAL,
+};
 const App = () => {
+  useEffect(() => {
+    CodePush.sync({
+      updateDialog: { title: "A new update is Available" },
+      installMode: CodePush.InstallMode.IMMEDIATE,
+    }).catch((e) => Toast.show({ type: "error", text2: e }));
+  }, []);
   return (
     <Provider store={Store().store}>
-      <PersistGate loading={null} persistor={Store().persistor}>
-        <Container />
-      </PersistGate>
+      <StatusBar backgroundColor={'#131313'} barStyle={'light-content'} />
+      <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+        <NavigationContainer>
+          <PersistGate loading={null} persistor={Store().persistor}>
+            <RootStackScreens />
+          </PersistGate>
+        </NavigationContainer>
+      </SafeAreaProvider>
+      <Toast topOffset={50} />
     </Provider>
   )
 }
-const Container = () => {
-  const theme: String = useAppSelector(selectTheme)
-  const dispatch = useAppDispatch()
-  // const dynamicStyles = GlobalStyle();
-
-  // console.log(theme);
-
+export default CodePush(CodePushOptions)(() => {
+  const queryClient = new QueryClient();
   return (
-    <>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <View
-            style={{
-              backgroundColor: "#131313",
-            }}>
-            <StatusBar
-              backgroundColor={"#131313"}
-              barStyle="dark-content"
-            />
-          </View>
-        {/* <Root /> */}
-        {/* <Toast config={toastConfig} topOffset={70} /> */}
-        <Login />
-      </GestureHandlerRootView>
-    </>
-  )
-}
+    <QueryClientProvider client={queryClient}>
+      <Provider store={Store().store}>
+        <App />
+      </Provider>
+    </QueryClientProvider>
+  );
+});
 
-export default App
+// export default App
 
-const styles = StyleSheet.create({})

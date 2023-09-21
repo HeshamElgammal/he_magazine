@@ -1,170 +1,126 @@
-import { StyleSheet, Text, TextInput, View, TextInputProps, KeyboardTypeOptions, StyleProp, TextStyle, ViewStyle, Platform } from 'react-native'
+import { StyleSheet, Text, TextInput, View, TextInputProps, KeyboardTypeOptions, StyleProp, TextStyle, ViewStyle, Platform, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
-import { fontPixel, heightPixel, pixelSizeHorizontal, theme, widthPixel } from 'theme/sizes'
+import { heightPixel, pixelSizeHorizontal, theme, widthPixel } from 'theme/sizes'
 import PhoneInput from 'react-native-phone-number-input'
 // import { useAppSelector } from 'store/store'
 // import { selectCurrentUser } from 'store/users'
 import CountryPicker from 'react-native-country-picker-modal';
 import { Colors } from 'theme/colors';
+import Fonts from 'theme/fonsFamily';
+import { DA, DownArrow } from 'assets/svgs';
 // import { GlobalStyle } from 'src/styles/global'
 
 const CustomInput = ({
+    name,
     Label,
-    value,
-    onChangeText,
+    values,
     handleBlur,
-    secureTextEntry = false,
     RenderIcon,
     placeholder,
-    error,
-    keyboardType,
+    touched,
+    errors,
+    handleChange,
     style,
     ContainerStyle,
-    props,
     paragraph = false,
-    country_code = "EG",
+    country_cc2,
     setFieldValue,
-    optional = false
+    optional = false,
+    setData,
+    ...props
 }: {
+    name: string;
     Label?: string,
-    value: string,
-    onChangeText: (str: string) => void,
-    props?: TextInputProps,
-    error?: string | undefined | null,
+    values: any,
+    handleChange: any;
+    handleBlur?: any;
+    touched?: any;
+    errors?: any;
     placeholder?: string | undefined,
     RenderIcon?: any,
-    handleBlur?: any,
-    secureTextEntry?: boolean,
-    keyboardType?: KeyboardTypeOptions,
     style?: StyleProp<TextStyle> | undefined;
     ContainerStyle?: StyleProp<ViewStyle>;
     paragraph?: boolean;
-    country_code?: string | null,
+    country_cc2?: any;
+    setData?: any;
     setFieldValue?: any;
     optional?: boolean
-}) => {
-    // const user = useAppSelector(selectCurrentUser)
+} & TextInputProps) => {
     const [showCode, setShowCode] = useState(false)
+
     return (
         <View style={[styles.container,]}>
             {paragraph ?
                 <>
                     <Text style={styles.label}>{Label}</Text>
-                    <View style={[styles.inputContainer, ContainerStyle,  { height: heightPixel(100), }]}>
+                    <View style={[styles.inputContainer, ContainerStyle, { height: heightPixel(100), }]}>
                         <TextInput
+                            {...props}
                             style={[styles.input, style ? style : null, { height: heightPixel(90), textAlignVertical: "top" }]}
-                            value={value}
-                            onChangeText={onChangeText}
+                            value={values[name.replace(/\s/g, '')]}
+                            onChangeText={handleChange(name.replace(/\s/g, ''))}
+                            onBlur={handleBlur(name.replace(/\s/g, ''))}
                             blurOnSubmit={true}
-                            onBlur={handleBlur}
-                            placeholder={placeholder}
-                            secureTextEntry={secureTextEntry}
-                            keyboardType={keyboardType}
                             multiline
                             numberOfLines={5}
-                            {...props}
                         />
-                        {Label == "Password" || Label == "New password" || Label == "Confirm password" ? <RenderIcon /> : null}
+                        {name == "Password" || name == "New password" || name == "Confirm password" ? <RenderIcon /> : null}
                     </View>
-                    {error && <Text style={[styles.error]}>{error}</Text>}
+                    {(errors[name.replace(/\s/g, '')] && touched[name.replace(/\s/g, '')]) && <Text style={[styles.error]}>{errors[name.replace(/\s/g, '')]}</Text>}
                 </>
                 :
                 <>
-                    {Label !== "Mobile number" ?
+                    {name !== "Mobile number" ?
                         <>
                             <Text style={[styles.label,]}>{Label} <Text style={{ opacity: .7 }}>{optional ? "(Optional)" : null}</Text></Text>
-                            <View style={[styles.inputContainer, ContainerStyle, ]}>
+                            <View style={[styles.inputContainer, ContainerStyle,]}>
                                 <TextInput
-                                    style={[styles.input, style ? style : null, { width: Label == "password" || Label == "Confirm password" ? '90%' : "90%", }]}
-                                    value={value}
-                                    onChangeText={onChangeText}
+                                    {...props}
+                                    style={[styles.input, style ? style : null, { width: name == "password" || name == "Confirm password" ? '90%' : "90%", }]}
+                                    value={values[name.replace(/\s/g, '')]}
+                                    onChangeText={handleChange(name.replace(/\s/g, ''))}
                                     blurOnSubmit={true}
                                     onBlur={handleBlur}
-                                    placeholder={placeholder}
-                                    secureTextEntry={secureTextEntry}
-                                    keyboardType={keyboardType}
-                                    {...props}
                                 />
-                                {Label == "Password" || Label == "New password" || Label == "Confirm password" ? <RenderIcon /> : null}
+                                {(name == "Password" || name == "New password" || name == "Confirm password") && <RenderIcon />}
                             </View>
-                            {error && <Text style={[styles.error,]}>{error}</Text>}
+                            {(errors[name.replace(/\s/g, '')] && touched[name.replace(/\s/g, '')]) && <Text style={[styles.error,]}>{errors[name.replace(/\s/g, '')]}</Text>}
                         </> :
                         <>
                             <Text style={styles.label}>{Label}</Text>
-                            {/* <PhoneInput
-                                defaultValue={user.mobile}
-                                disableArrowIcon
-                                containerStyle={styles.inputContainer}
-                                onChangeFormattedText={onChangeText}
-                                defaultCode={country_code || "EG"}
-                                onChangeCountry={(value) => {
-                                    setFieldValue("country_code", value.cca2)
-                                }}
-                                layout='first'
-                                codeTextStyle={{
-                                    color: COLORS.text1,
 
-                                }}
-                                // withShadow
-                                // autoFocus
-                                value={value}
-                                placeholder=' '
-                                // textInputStyle={[styles.input, { height: "100%", fontSize: theme.sizes.m }]}
-                                textInputStyle={{ height: heightPixel(50), padding: 0, color: COLORS.text1 }}
-                                textContainerStyle={{
-                                    backgroundColor: COLORS.third,
-                                    width: "100%",
-                                    height: "100%",
-                                    paddingBottom: 0,
-                                    justifyContent: "center",
-                                    paddingTop: 0
-                                }}
-                                flagButtonStyle={{ borderRightWidth: 1, borderColor: COLORS.secondly, }}
-                            /> */}
-
-                            <View style={[styles.inputContainer, ContainerStyle,]}>
+                            <View style={[styles.inputContainer]}>
                                 <CountryPicker
-                                    // theme={dark ? DARK_THEME : {}}
                                     withFilter
-                                    withFlag
-
-                                    countryCode={country_code ?? "EG"}
-                                    onSelect={(value) => {
-                                        console.log(value);
-                                        setFieldValue("country_code", value.cca2)
+                                    withFlagButton
+                                    countryCode={country_cc2}
+                                    onSelect={(country: any) => {
+                                        setData((prev: any) => ({ ...prev, country_cc2: country.cca2, country_code: country.callingCode[0] }))
+                                        handleChange('country_code', `+${country.callingCode[0]}`)
                                     }}
-                                    withCallingCode
-                                    // onSelect={}
+                                    withCallingCode={false}
                                     onClose={() => setShowCode(false)}
                                     onOpen={() => setShowCode(true)}
                                     visible={showCode}
-                                    withCallingCodeButton
-                                    theme={{
-                                        // onBackgroundTextColor:GlobalStyle().textColor1,
-                                        // 'transparent',
-                                        // primaryColor: "#ffff"
-                                    }}
                                 />
+                                <TouchableOpacity onPress={() => setShowCode(true)}>
+                                    <DA style={{ marginBottom: -4 }} />
+                                </TouchableOpacity>
                                 <TextInput
+                                    {...props}
                                     style={[styles.input, style ? style : null, {
-                                        width: Label == "Mobile number" || Label == "Mobile number" ? '90%' : "90%",
-                                        // backgroundColor:COLORS.error,
-                                        // borderLeftColor: COLORS.fourth,
+                                        width: name == "Mobile number" || name == "Mobile number" ? '90%' : "90%",
                                         borderLeftWidth: .3,
                                         marginLeft: 10
                                     }]}
-                                    value={value}
-                                    onChangeText={onChangeText}
+                                    value={values[name.replace(/\s/g, '')]}
+                                    onChangeText={handleChange(name.replace(/\s/g, ''))}
                                     blurOnSubmit={true}
                                     onBlur={handleBlur}
                                     placeholder={placeholder}
-                                    secureTextEntry={secureTextEntry}
-                                    keyboardType={keyboardType}
-                                    {...props}
                                 />
-
                             </View>
-                            {error && <Text style={[styles.error,]}>{error}</Text>}</>
+                            {(errors[name.replace(/\s/g, '')] && touched[name.replace(/\s/g, '')]) && <Text style={[styles.error,]}>{errors[name.replace(/\s/g, '')]}</Text>}</>
 
                     }
                 </>
@@ -178,42 +134,44 @@ export default CustomInput
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        paddingHorizontal: pixelSizeHorizontal(10),
-        marginTop: heightPixel(15),
-        // backgroundColor:"#a00"
+        marginTop: (20),
     },
     label: {
-        fontSize: fontPixel(15),
-
+        fontSize: (15),
+        marginBottom: 5,
         fontWeight: "400",
-        
+        fontFamily: Fonts.PoppinsMedium,
+        color: Colors().SecondColor
     },
     error: {
-        fontSize: fontPixel(15),
+        fontSize: (12),
         fontWeight: "400",
-        marginBottom: heightPixel(5),
-        // textTransform:"lowercase"
+        marginTop: (5),
+        textAlign: 'center',
+        color: Colors().Red,
+        fontFamily: Fonts.PoppinsMedium
     },
     inputContainer: {
         width: '100%',
-        height: Platform.OS == "ios" ? heightPixel(50) : heightPixel(60),
+        height: Platform.OS == "ios" ? (50) : (60),
         borderWidth: theme.border.thin,
-        backgroundColor:Colors().SecondGrey,
-
+        borderColor: 'rgba(19, 19, 19, 0.40)',
+        backgroundColor: Colors().SecondGrey,
         borderRadius: widthPixel(10),
         marginTop: heightPixel(3),
-
         flexDirection: "row",
         alignItems: "center",
         overflow: "hidden",
-        padding: 5
+        padding: 7,
+        color: Colors().SecondColor,
 
     },
     input: {
         width: '100%',
         height: Platform.OS == "ios" ? heightPixel(50) : heightPixel(60),
-        // paddingHorizontal: widthPixel(10),
         paddingLeft: widthPixel(5),
+        color: Colors().SecondColor,
+        fontFamily: Fonts.PoppinsMedium
 
 
     }

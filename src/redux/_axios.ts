@@ -15,8 +15,6 @@ export const api = create({
 
 const initAxios = (store: TStore) => {
     api.axiosInstance.interceptors.request.use(async (config: any) => {
-        // const tokens = store().store.getState().tokens;
-      
 
         const token: any = await AsyncStorage.getItem("USER_TOKEN")
 
@@ -27,9 +25,8 @@ const initAxios = (store: TStore) => {
         }
         return config;
     })
-    const injectAuthHeaders: any = async (config: AxiosRequestConfig) => {
-        // const tokens = store().store.getState().tokens;
 
+    const injectAuthHeaders: any = async (config: AxiosRequestConfig) => {
         const token: any = await AsyncStorage.getItem("USER_TOKEN");
         const authorization = `Bearer ${token}`;
         const authHeaders = { authorization, };
@@ -51,7 +48,7 @@ const initAxios = (store: TStore) => {
         }
         return config;
     };
-   
+
 
 
     axios.defaults.baseURL = BASE_URL;

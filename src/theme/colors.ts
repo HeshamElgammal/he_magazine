@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { selectTheme } from "src/redux/User";
+import { selectTheme } from "src/redux/auth";
 import { RootState, useAppSelector } from "src/redux/store";
 
 
@@ -36,8 +36,8 @@ function hexToRgbA(hex: any, alpha: any) {
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
-export const Colors = ( alpha = 1) => {
-    
+export const Colors = (alpha = 1) => {
+
     // const theme=useAppSelector(selectTheme)
     // const currentTheme = useSelector((state:RootState) => state.users.theme);
     // console.log('ttt',currentTheme);
@@ -46,25 +46,29 @@ export const Colors = ( alpha = 1) => {
     // console.log(theme);
 
     // if (theemee == "light") {
-        return {
-            FirstColor: hexToRgbA('#ECEAE7', alpha),
-            SecondColor: hexToRgbA('#131313', alpha), //#dce9ea
-            ThirdColor: hexToRgbA('#3D3D3D', alpha),
-            ForthColor: hexToRgbA('#131313', alpha),
-            FifthColor: hexToRgbA('#95808A', alpha), // grey
-            Dark: hexToRgbA('#000', alpha),
-            White: hexToRgbA('#FFF', alpha),
-            Red: hexToRgbA('#DF281A', alpha),
-            Green: hexToRgbA('#25D366', alpha),
-            Yellow: hexToRgbA('#F6CB64', alpha),
-            Blue: hexToRgbA('#00F', alpha),
-            Grey: hexToRgbA('#F3F3F4', alpha),
-            SecondGrey: hexToRgbA('#DBD9D6', alpha),         
-            ProjectDelete: hexToRgbA('#E74645', alpha),
-            BgWelcomeColor: hexToRgbA('#F9FAFE', alpha),
-            textInputTextColor: hexToRgbA('#B0B3B4', alpha),
-            textInputPlaceholderTextColor: hexToRgbA('#B0B3B4', alpha),
-        };
+    return {
+        FirstColor: hexToRgbA('#ECEAE7', alpha),
+        SecondColor: hexToRgbA('#131313', alpha), //#dce9ea
+        ThirdColor: hexToRgbA('#3D3D3D', alpha),
+        ForthColor: hexToRgbA('#131313', alpha),
+        FifthColor: hexToRgbA('#95808A', alpha), // grey
+        SixthColor: hexToRgbA('#757575', alpha), // grey
+        Dark: hexToRgbA('#000', alpha),
+        White: hexToRgbA('#FFF', alpha),
+        Red: hexToRgbA('#DF281A', alpha),
+        Green: hexToRgbA('#25D366', alpha),
+        Yellow: hexToRgbA('#F6CB64', alpha),
+        Blue: hexToRgbA('#00F', alpha),
+        Grey: hexToRgbA('#F3F3F4', alpha),
+        SecondGrey: hexToRgbA('#DBD9D6', alpha),
+        ThirdGrey: hexToRgbA('#6C6C6C', alpha),
+        ForthGrey: hexToRgbA('#DAD9D6', alpha),
+        ProjectDelete: hexToRgbA('#E74645', alpha),
+        BgWelcomeColor: hexToRgbA('#F9FAFE', alpha),
+        textInputTextColor: hexToRgbA('#B0B3B4', alpha),
+        textInputPlaceholderTextColor: hexToRgbA('#B0B3B4', alpha),
+        lightButton: hexToRgbA('#757575', alpha),
+    };
     // } else {
     //     return {
     //         FirstColor: hexToRgbA('#131313', alpha),
