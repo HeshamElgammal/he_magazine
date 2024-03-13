@@ -7,6 +7,7 @@ import { BACK, Logo, Search, Share } from 'assets/svgs'
 import { Colors } from 'theme/colors'
 import { useNavigation } from '@react-navigation/native'
 import { _Search } from 'src/utils/HF'
+import { onSharePressed } from 'src/utils/share_Article'
 
 const GlobalHeader = ({
     search,
@@ -14,15 +15,18 @@ const GlobalHeader = ({
     text,
     data,
     setFilter,
-    updateSearch
+    updateSearch,
+    id,
+    Type
 }: {
-    search?: boolean
-    share?: boolean
-    text?: any
-    data?: any[]
-    setFilter?: any
-    updateSearch?: any
-
+    search?: boolean;
+    share?: boolean;
+    text?: any;
+    data?: any[];
+    setFilter?: any;
+    updateSearch?: any;
+    id?: any;
+    Type?:any
 }) => {
     const { goBack } = useNavigation()
     return (
@@ -33,9 +37,12 @@ const GlobalHeader = ({
                 </TouchableOpacity>
                 <Logo height={40} width={100} />
                 {
-                    // share ?
-                    //     <Share style={{ marginTop: 10 }} />
-                    //     :
+                    share ?
+
+                        <TouchableOpacity activeOpacity={.8} onPress={() => onSharePressed(id,Type)}>
+                            <Share width={25} style={{ marginTop: 10 }} />
+                        </TouchableOpacity>
+                        :
                         <View style={{ width: 25 }} />
                 }
 

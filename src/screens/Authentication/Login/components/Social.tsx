@@ -23,7 +23,7 @@ const SocialIcon = ({
                     loading ?
                         <ActivityIndicator size={'small'} color={'black'} />
                         :
-                        <Icon />
+                        <Icon fill={Icon == 'Facebook' ? "#1877F2" : ""} />
                 }
             </TouchableOpacity>
         </>

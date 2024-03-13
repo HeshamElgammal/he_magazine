@@ -13,7 +13,7 @@ const slice = createSlice({
     reducers: {
         logout: () => initialState,
         changeCategoryIndex: (state, action) => { state.categoryIndex = action.payload },
-        changeArticleIndex: (state, action) => { state.articleIndex = action.payload},
+        changeArticleIndex: (state, action) => { state.articleIndex = action.payload },
         changeSelectedArticleIndex: (state, action) => { state.selectedArticleIndex = action.payload },
         changeIssueImages: (state, action) => { state.IssueImages = action.payload },
         changeAllIssues: (state, action) => { state.AllIssues = action.payload },
@@ -114,10 +114,7 @@ const slice = createSlice({
         //getExploreArticles
         builder.addCase(thunks.getExploreArticles.fulfilled, (state, action) => {
             state.ExploreData = state.ExploreData.concat(action.payload.data.data)
-            {
-                action.payload?.data?.data?.length == 15
-                    && (state.NextPage = (action.payload.data.pagination?.current_page) + 1)
-            }
+            state.NextPage = action.payload.data.pagination?.last_page
         });
         builder.addCase(thunks.getExploreArticles.rejected, (state, action: any) => {
             Toast.show({
@@ -129,10 +126,7 @@ const slice = createSlice({
         //getFeaturedArticles
         builder.addCase(thunks.getFeaturedArticles.fulfilled, (state, action) => {
             state.ExploreData = state.ExploreData.concat(action.payload.data.data)
-            {
-                action.payload?.data?.data?.length == 15
-                    && (state.NextPage = (action.payload.data.pagination?.current_page) + 1)
-            }
+            state.NextPage = action.payload.data.pagination?.last_page
         });
         builder.addCase(thunks.getFeaturedArticles.rejected, (state, action: any) => {
             Toast.show({
@@ -144,10 +138,7 @@ const slice = createSlice({
         //getLatestArticles
         builder.addCase(thunks.getLatestArticles.fulfilled, (state, action) => {
             state.ExploreData = state.ExploreData.concat(action.payload.data.data)
-            {
-                action.payload?.data?.data?.length == 15
-                    && (state.NextPage = (action.payload.data.pagination?.current_page) + 1)
-            }
+            state.NextPage = action.payload.data.pagination?.last_page
         });
         builder.addCase(thunks.getLatestArticles.rejected, (state, action: any) => {
             Toast.show({
@@ -159,10 +150,7 @@ const slice = createSlice({
         //getSelectedArticles
         builder.addCase(thunks.getSelectedArticles.fulfilled, (state, action) => {
             state.ExploreData = state.ExploreData.concat(action.payload.data.data)
-            {
-                action.payload?.data?.data?.length == 15
-                    && (state.NextPage = (action.payload.data.pagination?.current_page) + 1)
-            }
+            state.NextPage = action.payload.data.pagination?.last_page
         });
         builder.addCase(thunks.getSelectedArticles.rejected, (state, action: any) => {
             Toast.show({
@@ -183,6 +171,20 @@ const slice = createSlice({
                     text1: action.payload.data.message,
                 })
             }
+        });
+
+        //dosendMassage
+        builder.addCase(thunks.dosendMassage.fulfilled, (state, action) => {
+            Toast.show({
+                type: "success",
+                text1: action.payload.message,
+            })
+        });
+        builder.addCase(thunks.dosendMassage.rejected, (state, action: any) => {
+            Toast.show({
+                type: "error",
+                text1: action.payload.data.message,
+            })
         });
     },
 })
@@ -210,6 +212,6 @@ const App = {
     changeAllIssues: slice.actions.changeAllIssues,
     changeExploreData: slice.actions.changeExploreData,
     changeNextPage: slice.actions.changeNextPage,
-    changePDF:slice.actions.changePDF,
+    changePDF: slice.actions.changePDF,
 }
 export default App

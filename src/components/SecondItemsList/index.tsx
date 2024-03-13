@@ -2,7 +2,9 @@ import { useNavigation } from "@react-navigation/native";
 import { NoData } from "assets/svgs";
 import React from "react";
 import { FlatList, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useSelector } from "react-redux";
 import { SkeletonPlaceholder } from "rn-skeleton-placeholder";
+import { selectNextPage } from "src/redux/app";
 import { Colors } from "theme/colors";
 import Fonts from "theme/fonsFamily";
 import { width } from "theme/sizes";
@@ -12,15 +14,16 @@ const SecondItemsList = ({
     horizontal,
     saved,
     loading,
-    onHandleEndReached
+    onMomentumScrollEnd
 }: {
     data?: any;
     horizontal?: boolean;
     saved?: boolean;
     loading?: boolean;
-    onHandleEndReached?: any
+    onMomentumScrollEnd?: any
 }) => {
     const { navigate } = useNavigation<any>()
+    const NextPage = useSelector(selectNextPage)
     return (
         <>
             {
@@ -84,7 +87,7 @@ const SecondItemsList = ({
                                     showsVerticalScrollIndicator={false}
                                     columnWrapperStyle={{ justifyContent: 'space-between' }}
                                     data={data}
-                                    onEndReached={data?.length % 15 == 0 ? onHandleEndReached : null}
+                                    onMomentumScrollEnd={onMomentumScrollEnd}
                                     style={styles.ListStyle}
                                     renderItem={({ item }) => (
                                         <>

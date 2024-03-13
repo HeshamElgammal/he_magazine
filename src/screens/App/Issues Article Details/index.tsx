@@ -18,6 +18,7 @@ import { BackVideo, FillHeart, Heart } from 'assets/svgs'
 import { useSelector } from 'react-redux'
 import Carousel from 'react-native-snap-carousel'
 import { Loader } from '../Article Details/Loader'
+import { TransferDate } from 'src/utils/HF'
 const IssuesArticleDetailScreen = () => {
     const dispatch = useAppDispatch()
     const navigation = useNavigation<any>()
@@ -136,6 +137,7 @@ const IssuesArticleDetailScreen = () => {
                                                     {item?.model?.short_description && <View style={DetailsStyle.divider} />}
                                                     <Text style={DetailsStyle.description}>{item?.model?.short_description}</Text>
                                                     {item?.model?.author && <Text style={DetailsStyle.text}>Written by: <Text style={DetailsStyle.boldText}>{item?.model?.author}</Text></Text>}
+                                                    <Text style={DetailsStyle.text}>{TransferDate(item?.model?.date)}</Text>
                                                     <CarouselImages data={item?.model?.gallery} />
                                                 </View>
 

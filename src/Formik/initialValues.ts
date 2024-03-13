@@ -3,6 +3,11 @@ export const login_initial_values = {
     Password: '',
 };
 
+export const contact_initial_values = {
+    Email: '',
+    Name: '',
+    Message:""
+};
 export const reset_initial_values = {
     Email: '',
 };

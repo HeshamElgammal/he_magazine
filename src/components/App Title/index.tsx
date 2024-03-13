@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { theme } from 'theme/sizes'
 import { Colors } from 'theme/colors'
 import Fonts from 'theme/fonsFamily'
 import { useNavigation } from '@react-navigation/native'

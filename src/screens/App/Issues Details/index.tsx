@@ -35,7 +35,7 @@ const IssuesDetailsScreen = () => {
     return (
         <SafeAreaView style={DetailsStyle.SafeAreaView}>
             <View style={{ backgroundColor: Colors().FirstColor }}>
-                <GlobalHeader share />
+                <GlobalHeader share id={id} Type={'Issue'} />
             </View>
             <View style={DetailsStyle.MainContainer}>
                 <ScrollView showsVerticalScrollIndicator={false}>

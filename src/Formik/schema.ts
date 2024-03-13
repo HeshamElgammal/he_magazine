@@ -12,6 +12,12 @@ export const LoginSchema = Yup.object().shape({
     Password: Yup.string().required('Password is required').min(8, 'Password must be at least 8 numbers'),
 })
 
+export const ContactSchema = Yup.object().shape({
+    Email: Yup.string().email('Email must be valid').trim().min(8, 'Enter a valid email').required('Email is required').matches(EmailReg, 'Invalid email'),
+    Name: Yup.string().required('Name is required'),
+    Message: Yup.string().required('Message is required'),
+})
+
 export const ResetSchema = Yup.object().shape({
     Email: Yup.string().email('Email must be valid').trim().min(8, 'Enter a valid email').required('Email is required').matches(EmailReg, 'Invalid email'),
 })

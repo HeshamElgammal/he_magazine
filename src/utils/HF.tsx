@@ -1,3 +1,6 @@
+import messaging from '@react-native-firebase/messaging';
+import DeviceInfo from 'react-native-device-info';
+
 export function getMonthName(monthNumber: number) {
     const date = new Date();
     date.setMonth(monthNumber - 1);
@@ -37,3 +40,47 @@ export const _Search = (text: string, data: any, setFilter: any, updateQeury: an
     }
 }
 
+
+export const getToken = async () => {
+    // const token = await DeviceInfo.getDeviceToken()
+    const token = await messaging().getToken();
+    console.warn(token)
+    // alert(token);
+}
+
+
+export const remoteMessage = () => {
+    messaging().onNotificationOpenedApp(remoteMessage => {
+        console.log(
+            'Notification caused app to open from background state:',
+            remoteMessage.notification,
+        );
+    });
+
+    // Check whether an initial notification is available
+    messaging()
+        .getInitialNotification()
+        .then(remoteMessage => {
+            if (remoteMessage) {
+                console.log(
+                    'Notification caused app to open from quit state:',
+                    remoteMessage.notification,
+                );
+            }
+        });
+}
+
+export const requestPermissions = async () => {
+    const authStatus = await messaging().requestPermission()
+    const Enabled =
+        authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+        authStatus === messaging.AuthorizationStatus.PROVISIONAL
+
+    if (Enabled) {
+        console.warn("Permission", authStatus)
+    }
+}
+
+export const subscribeToTopic = async () => {
+    messaging().subscribeToTopic('HeMagazine').then(() => console.warn('Subscribed to topic!'));
+}

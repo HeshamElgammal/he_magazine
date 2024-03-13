@@ -27,7 +27,7 @@ const CustomBottomTab = ({
                 </TouchableOpacity>
                 <TouchableOpacity activeOpacity={.8} onPress={() => { dispatch(App.changePDF(!PDF)) }} style={style.activeTab}>
                     <ActivePdf />
-                    <Text style={style.activeText}>{PDF ? 'PDF' : 'Text'}</Text>
+                    <Text style={style.activeText}>{PDF ? 'Press here for pdf preview' : 'press here for text preview'}</Text>
                 </TouchableOpacity>
             </View>
 

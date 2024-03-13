@@ -1,4 +1,4 @@
-import { FlatList, Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, FlatList, Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from 'src/redux/store'
 import { selectTheme } from 'src/redux/auth'
@@ -24,57 +24,61 @@ const ShowMoreScreen = () => {
     const navigation = useNavigation<any>()
     const { title }: any = useRoute().params;
     const dispatch = useAppDispatch()
+    const [limit, setLimit] = React.useState<number>(1)
     const NextPage = useSelector(selectNextPage)
     const ExploreData = useSelector(selectExploreData)
     const AllIssues = useSelector(selectAllIssues)
-    const issuesLoading = useLoadingSelector(AppThunks.getAllIssues())
-    const articlesLoading = useLoadingSelector(AppThunks.getAllIssues())
-
+    const [load2, setLoad2] = React.useState(false)
+    console.log(ExploreData[3]?.date)
+    console.log(limit)
     useEffect(() => {
         const RenderFunction = navigation.addListener('focus', () => {
             dispatch(App.changeExploreData([]))
             dispatch(App.changeAllIssues([]))
 
             title == 'EXPLORE' ?
-                dispatch(AppThunks.getExploreArticles(1))
+                dispatch(AppThunks.getExploreArticles(limit))
                 :
                 title == 'LATEST' ?
-                    dispatch(AppThunks.getLatestArticles(1))
+                    dispatch(AppThunks.getLatestArticles(limit))
                     :
                     title == 'FEATURED' ?
-                        dispatch(AppThunks.getFeaturedArticles(1))
+                        dispatch(AppThunks.getFeaturedArticles(limit))
                         :
                         title == "RECENT ISSUES" ?
-                            dispatch(AppThunks.getAllIssues(1))
+                            dispatch(AppThunks.getAllIssues(limit))
                             :
-                            dispatch(AppThunks.getSelectedArticles(1))
-
-
+                            dispatch(AppThunks.getSelectedArticles(limit))
         })
         return RenderFunction
     }, [navigation])
-    const onHandleEndReachedIssues = () => {
-        if (!issuesLoading) {
-            dispatch(AppThunks.getAllIssues(NextPage))
-        }
+
+    function handleInfinityScroll(event: any) {
+        let mHeight = event?.nativeEvent.layoutMeasurement.height;
+        let cSize = event?.nativeEvent.contentSize.height;
+        let Y = event?.nativeEvent.contentOffset.y;
+        if (Math.ceil(mHeight + Y) >= cSize) return true;
+        return false;
     }
-    const onHandleEndReached = () => {
-        if (!articlesLoading) {
-            title == 'EXPLORE' ?
-                dispatch(AppThunks.getExploreArticles(NextPage))
+
+    React.useEffect(() => {
+        { limit > 1 && setLoad2(true) }
+        {
+            limit > 1 && (title == 'EXPLORE' ?
+                dispatch(AppThunks.getExploreArticles(limit)).then(() => { setLoad2(false) })
                 :
                 title == 'LATEST' ?
-                    dispatch(AppThunks.getLatestArticles(NextPage))
+                    dispatch(AppThunks.getLatestArticles(limit)).then(() => { setLoad2(false) })
                     :
                     title == 'FEATURED' ?
-                        dispatch(AppThunks.getFeaturedArticles(NextPage))
+                        dispatch(AppThunks.getFeaturedArticles(limit)).then(() => { setLoad2(false) })
                         :
                         title == "RECENT ISSUES" ?
                             null
                             :
-                            dispatch(AppThunks.getSelectedArticles(NextPage))
+                            dispatch(AppThunks.getSelectedArticles(limit))).then(() => { setLoad2(false) })
         }
-    }
+    }, [limit])
 
     return (
         <SafeAreaView style={ShowStyle.SafeAreaView}>
@@ -87,11 +91,11 @@ const ShowMoreScreen = () => {
                 {
                     title == "RECENT ISSUES" ?
                         <FlatList
-                            data={AllIssues ? [...AllIssues]?.sort((a: any, b: any) => new Date(a?.date) - new Date(b?.date)) : []}
+                            data={AllIssues}
                             numColumns={2}
                             showsVerticalScrollIndicator={false}
                             columnWrapperStyle={{ justifyContent: 'space-between' }}
-                            onEndReached={AllIssues?.length % 15 == 0 ? onHandleEndReachedIssues : null}
+                            onMomentumScrollEnd={(event) => { if (handleInfinityScroll(event)) { (AllIssues?.length % 15 == 0 && limit != NextPage) && setLimit(limit + 1) } }}
                             renderItem={({ item }) => (
                                 <TouchableOpacity onPress={() => navigation.navigate('IssuesDetails', { id: item?.id })} activeOpacity={.8} style={[styles.verticalContainer]}>
                                     <Image
@@ -110,10 +114,10 @@ const ShowMoreScreen = () => {
                         />
 
                         :
-                        // <ScrollView showsVerticalScrollIndicator={false}>
-                        <SecondItemsList data={ExploreData ? [...ExploreData]?.sort((a: any, b: any) => new Date(b?.date) - new Date(a?.date)) : []} onHandleEndReached={onHandleEndReached} />
-                    // </ScrollView >
-
+                        <>
+                            <SecondItemsList data={ExploreData} onMomentumScrollEnd={(event: any) => { if (handleInfinityScroll(event)) { ((ExploreData ? [...ExploreData]?.sort((a: any, b: any) => new Date(b?.date) - new Date(a?.date)) : [])?.length % 15 == 0 && limit != NextPage) && setLimit(limit + 1) } }} />
+                            {load2 && <ActivityIndicator size={25} color={Colors().SecondColor} />}
+                        </>
                 }
 
                 <View style={{ marginTop: Platform.OS == 'ios' ? 100 : 130 }} />

@@ -46,7 +46,7 @@ const PDFScreen = () => {
         <>
             <SafeAreaView style={PDFStyle.SafeAreaView}>
                 <View style={PDFStyle.HeadContainer}>
-                    <GlobalHeader share />
+                    <GlobalHeader  />
                 </View>
                 {
                     PDF ?

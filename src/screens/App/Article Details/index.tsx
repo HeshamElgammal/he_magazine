@@ -9,7 +9,7 @@ import { DetailsStyle } from './styles'
 import GlobalHeader from 'components/Header'
 import { Colors } from 'theme/colors'
 import CarouselImages from 'components/Carousel Images'
-import { FillHeart, Heart } from 'assets/svgs'
+import { FillHeart, Heart, Share } from 'assets/svgs'
 import AppThunks from 'src/redux/app/thunks'
 import { useSelector } from 'react-redux'
 import { selectArticleDetail, selectFavData } from 'src/redux/app'
@@ -19,6 +19,8 @@ import RenderHTML from 'react-native-render-html'
 import { width } from 'theme/sizes'
 import FirstItemsList from 'components/FirstItemsList'
 import AppTitle from 'components/App Title'
+import { TransferDate } from 'src/utils/HF'
+import { onSharePressed } from 'src/utils/share_Article'
 
 
 const ArticleDetailScreen = () => {
@@ -37,12 +39,12 @@ const ArticleDetailScreen = () => {
 
     useEffect(() => {
         dispatch(AppThunks.getSingleArticle(id))
+        // alert(id)
     }, [id])
-
     return (
         <SafeAreaView style={DetailsStyle.SafeAreaView}>
             <View style={{ backgroundColor: Colors().FirstColor }}>
-                <GlobalHeader share />
+                <GlobalHeader share id={id} Type={'article'} />
             </View>
             <View style={DetailsStyle.MainContainer}>
                 <ScrollView showsVerticalScrollIndicator={false}>
@@ -78,6 +80,7 @@ const ArticleDetailScreen = () => {
                                 <View style={DetailsStyle.divider} />
                                 <Text style={DetailsStyle.description}>{ArticleDetail?.short_description}</Text>
                                 <Text style={DetailsStyle.text}>Written by:<Text style={DetailsStyle.boldText}> {ArticleDetail?.author}</Text></Text>
+                                <Text style={DetailsStyle.text}>{TransferDate(ArticleDetail?.date)}</Text>
 
                                 <CarouselImages data={ArticleDetail?.gallery} />
                             </View>

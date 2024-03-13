@@ -5,6 +5,7 @@ import thunks from "src/redux/auth/thunks";
 import { useAppDispatch } from "src/redux/store";
 import { Colors } from "theme/colors";
 
+
 const SplashScreen = () => {
     const dispatch = useAppDispatch()
     const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -17,6 +18,7 @@ const SplashScreen = () => {
             useNativeDriver: true,
         }).start();
     }, [])
+
 
     return (
         <>

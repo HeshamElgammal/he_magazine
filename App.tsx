@@ -1,4 +1,4 @@
-import { Alert, StatusBar, } from 'react-native'
+import { StatusBar, } from 'react-native'
 import { PersistGate } from 'redux-persist/integration/react'
 import { Provider } from 'react-redux'
 import React, { useEffect } from 'react'
@@ -7,52 +7,46 @@ import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-c
 import { NavigationContainer } from '@react-navigation/native'
 import RootStackScreens from 'navigation'
 import Toast from "react-native-toast-message";
-import CodePush from "react-native-code-push";
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import messaging from '@react-native-firebase/messaging';
+import { getToken, remoteMessage, requestPermissions, subscribeToTopic } from 'src/utils/HF';
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import DeviceInfo from 'react-native-device-info';
 
-let CodePushOptions = {
-  checkFrequency: CodePush.CheckFrequency.MANUAL,
-};
+
+
 const App = () => {
-  useEffect(() => {
-    CodePush.sync({
-      updateDialog: { title: "A new update is Available" },
-      installMode: CodePush.InstallMode.IMMEDIATE,
-    }).catch((e) => Toast.show({ type: "error", text2: e }));
-  }, []);
-
-  useEffect(() => {
-    const unsubscribe = messaging().onMessage(async remoteMessage => {
-      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
-    });
-
-    return unsubscribe;
-  }, []);
-  return (
-    <Provider store={Store().store}>
-      <StatusBar backgroundColor={'#131313'} barStyle={'light-content'} />
-      <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-        <NavigationContainer>
-          <PersistGate loading={null} persistor={Store().persistor}>
-            <RootStackScreens />
-          </PersistGate>
-        </NavigationContainer>
-      </SafeAreaProvider>
-      <Toast topOffset={50} />
-    </Provider>
-  )
-}
-export default CodePush(CodePushOptions)(() => {
   const queryClient = new QueryClient();
+
+  useEffect(() => {
+    subscribeToTopic()
+    requestPermissions()
+    remoteMessage()
+    getToken()
+    const unsubscribe = messaging().onMessage(async (message: any) => {
+      const token = await DeviceInfo.getDeviceToken()
+      console.warn(token)
+      console.log('Message', message)
+    })
+    return unsubscribe
+  }, [])
+
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={Store().store}>
-        <App />
+        <StatusBar backgroundColor={'#131313'} barStyle={'light-content'} />
+        <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+          <NavigationContainer>
+            <PersistGate loading={null} persistor={Store().persistor}>
+              {/* <HandleDeepLinking /> */}
+              <RootStackScreens />
+            </PersistGate>
+          </NavigationContainer>
+        </SafeAreaProvider>
+        <Toast topOffset={50} />
       </Provider>
     </QueryClientProvider>
-  );
-});
+  )
+}
 
-// export default App
+export default App
 

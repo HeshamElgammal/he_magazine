@@ -12,12 +12,13 @@ const featuredArticles = (page: number) => api.get(`featured-articles?page=${pag
 const singleArticle = (id: number) => api.get(`articles/${id}`)
 const homeCategoriesData = (data: any) => api.get(`categories/${data}`)
 const issueDetail = (id: number) => api.get(`issue/${id}`)
+const sendMassage = (data: any) => api.post(`contact`, { ...data })
+
 
 
 const favoriteArticles = () => api.get('favorite-articles')
 const addtoFav = (data: any) => api.post('favorite-articles', { ...data })
 const removefromFav = (id: number) => api.delete(`favorite-articles/${id}`)
-
 
 
 
@@ -37,7 +38,8 @@ const AppAPI = {
 
     favoriteArticles,
     addtoFav,
-    removefromFav
+    removefromFav,
+    sendMassage
 };
 
 export default AppAPI;

@@ -44,6 +44,8 @@ import Explore from "src/assets/svgs/atoms/Explore.svg"
 import Library from "src/assets/svgs/atoms/Library.svg"
 import Profile from "src/assets/svgs/atoms/Profile.svg"
 import CategoryDrawer from "src/assets/svgs/atoms/CategoryDrawer.svg"
+import ContactUs from "src/assets/svgs/atoms/ContactUs.svg"
+
 
 
 
@@ -75,6 +77,13 @@ import ActivePdf from "src/assets/svgs/atoms/ActivePdf.svg"
 
 
 
+import Phone from "src/assets/svgs/atoms/Phone.svg"
+import Email from "src/assets/svgs/atoms/Email.svg"
+import Marker from "src/assets/svgs/atoms/Marker.svg"
+import Instagram from "src/assets/svgs/atoms/Instagram.svg"
+import Youtube from "src/assets/svgs/atoms/Youtube.svg"
+import Twitter from "src/assets/svgs/atoms/Twitter.svg"
+import Linkedin from "src/assets/svgs/atoms/Linkedin.svg"
 
 
 
@@ -137,5 +146,14 @@ export {
     DeActiveFormat,
     ActivePdf,
     DeActivePdf,
-    BackVideo
+    BackVideo,
+    ContactUs,
+
+    Phone,
+    Email,
+    Marker,
+    Instagram,
+    Youtube,
+    Twitter,
+    Linkedin
 }

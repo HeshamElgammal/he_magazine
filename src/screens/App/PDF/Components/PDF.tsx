@@ -6,13 +6,14 @@ import RenderHTML from "react-native-render-html";
 import Carousel from "react-native-snap-carousel";
 import { useSelector } from "react-redux";
 import { DetailsStyle } from "screens/App/Issues Article Details/styles";
-import App, { selectArticleIndex, selectFavData, selectIssueDetail, selectIssueImages } from "src/redux/app";
+import { selectArticleIndex, selectFavData, selectIssueDetail, selectIssueImages } from "src/redux/app";
 import Video from 'react-native-video';
 import { width } from "theme/sizes";
 import { selectIsAuth } from "src/redux/auth";
 import { useAppDispatch } from "src/redux/store";
 import AppThunks from "src/redux/app/thunks";
 import FastImage from 'react-native-fast-image'
+import { TransferDate } from "src/utils/HF";
 
 const PDFContent = ({
     Index,
@@ -82,6 +83,7 @@ const PDFContent = ({
                                         {item?.model?.short_description && <View style={DetailsStyle.divider} />}
                                         <Text style={DetailsStyle.description}>{item?.model?.short_description}</Text>
                                         {item?.model?.author && <Text style={DetailsStyle.text}>Written by: <Text style={DetailsStyle.boldText}>{item?.model?.author}</Text></Text>}
+                                        <Text style={DetailsStyle.text}>{TransferDate(item?.model?.date)}</Text>
                                         <CarouselImages data={item?.model?.gallery} />
                                     </View>
 

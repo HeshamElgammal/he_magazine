@@ -54,7 +54,6 @@ const HomeScreen = () => {
                         selectindex == -1 ?
                             <>
                                 <AppTitle text='EXPLORE' seemore />
-
                                 <FirstItemsList loading={loading} data={HomeData?.explore_articles ? [...HomeData?.explore_articles]?.sort((a: any, b: any) => new Date(b?.date) - new Date(a?.date)) : []} />
                                 <View style={{ height: 30 }} />
                                 {/* <SecondItemsList loading={loading} data={HomeData?.home_articles} /> */}

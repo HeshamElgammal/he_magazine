@@ -4,11 +4,11 @@ import { SafeAreaView, StyleSheet, Text, Dimensions, View, TouchableOpacity, Pla
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import { useDispatch, useSelector } from 'react-redux';
 import { Colors } from 'theme/colors';
-import { CategoryDrawer, Close, DownArrow, Explore, Home, Library, Logo, Profile } from 'assets/svgs';
+import { Close, ContactUs, Explore, Home, Library, Logo, Profile } from 'assets/svgs';
 import AnimatedAcordion from './AnimatedAcordion';
 import { useNavigation } from '@react-navigation/native';
-import { LogoutButton } from 'screens/App/Profile/component/Logout';
 import App, { selectCategoryIndex } from 'src/redux/app';
+import { selectIsAuth } from 'src/redux/auth';
 
 
 const { height } = Dimensions.get("window")
@@ -17,9 +17,10 @@ const CustomSidebarMenu = (props: any) => {
     const dispatch = useDispatch()
     const navigation = useNavigation<any>()
     const SelectedIndex = useSelector(selectCategoryIndex)
+    const isAuth = useSelector(selectIsAuth)
 
     return (
-        <DrawerContentScrollView style={{ backgroundColor: Colors().SecondColor, paddingHorizontal: 20, paddingTop: 15, }} {...props}>
+        <DrawerContentScrollView style={styles.DrawerContentScrollView} {...props}>
             <SafeAreaView style={styles.Container}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Logo />
@@ -40,6 +41,12 @@ const CustomSidebarMenu = (props: any) => {
                 <TouchableOpacity activeOpacity={.8} onPress={() => { navigation.navigate('Profile') }} style={{ marginBottom: 35 }}>
                     <Profile />
                 </TouchableOpacity>
+                    <TouchableOpacity activeOpacity={.8} onPress={() => { navigation.navigate('Contactus') }} style={{ marginBottom: 35, flexDirection: 'row', alignItems: 'center' }}>
+                        <ContactUs />
+                        <Text style={{ color: Colors().FirstColor, fontSize: 15, marginLeft: 13, fontWeight: '500' }}>Contact us</Text>
+                    </TouchableOpacity>
+                
+
                 <View style={{
                     marginBottom: 35,
                     flexDirection: 'row',
@@ -53,20 +60,23 @@ const CustomSidebarMenu = (props: any) => {
                     }} SelectedIndex={SelectedIndex} />
                 </View>
             </SafeAreaView>
-            {/* <LogoutButton /> */}
         </DrawerContentScrollView>
 
     );
 };
 
 const styles = StyleSheet.create({
+    DrawerContentScrollView: {
+        backgroundColor: Colors().SecondColor,
+        paddingHorizontal: 20,
+        paddingTop: 15,
+    },
     Container:
     {
         height: height * .8,
         width: '100%',
         alignSelf: 'center',
         backgroundColor: Colors().SecondColor,
-        // paddingHorizontal: 20
     },
     Close:
     {

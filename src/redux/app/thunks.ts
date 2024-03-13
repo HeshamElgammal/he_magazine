@@ -309,6 +309,29 @@ const addArticleToFav: any = createAsyncThunk<any, any, any>(
     }
 )
 
+const dosendMassage: any = createAsyncThunk<any, any, any>(
+    'app/sendMassage',
+    async (data, thunkApi: any) => {
+        try {
+            const response = await AppAPI.sendMassage(data);
+            // alert(JSON.stringify(response.data));
+            if (
+                response.status == 401 ||
+                response.status == 422 ||
+                response.status == 404 ||
+                response.status == 403 ||
+                response.status == 500 ||
+                response.status == 503
+            ) {
+                throw response;
+            }
+            return response.data
+        } catch (error) {
+            return thunkApi.rejectWithValue(error)
+        }
+    }
+)
+
 const removeArticleFromFav: any = createAsyncThunk<any, any, any>(
     'app/removefromFav',
     async (id, thunkApi: any) => {
@@ -346,7 +369,8 @@ const AppThunks = {
 
     getFavoriteArticles,
     addArticleToFav,
-    removeArticleFromFav
+    removeArticleFromFav,
+    dosendMassage
 };
 
 export default AppThunks;

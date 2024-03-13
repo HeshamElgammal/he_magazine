@@ -20,6 +20,6 @@ export const HomeStyle = StyleSheet.create({
         height: 1,
         alignSelf: 'center',
         marginVertical: 5,
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
     }
 })
