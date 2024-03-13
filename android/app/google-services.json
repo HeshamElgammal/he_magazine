@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "137078762778",
+    "project_id": "he-magazin",
+    "storage_bucket": "he-magazin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:137078762778:android:b19f3cefc7ad6e817d50a3",
+        "android_client_info": {
+          "package_name": "com.he_magazine"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgkG5EfwXyCOaLxuFk82VA7uDpYICT3F8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

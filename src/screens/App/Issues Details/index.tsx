@@ -66,7 +66,7 @@ const IssuesDetailsScreen = () => {
                         color='dark'
                     />
                     {/* {console.log(JSON.stringify(IssueDetail?.items?.filter((key: any) => key?.type == 'article')))} */}
-                    <AppTitle text='IN THIS ISSUES' />
+                    <AppTitle text='IN THIS ISSUE' />
                     <FirstItemsList loading={loading} issue data={IssueDetail?.items ? [...IssueDetail?.items?.filter((key: any) => key?.type == 'article')]?.sort((a: any, b: any) => new Date(b?.date) - new Date(a?.date)) : []} />
 
                     <View style={DetailsStyle.divider} />

@@ -1,4 +1,4 @@
-import { StatusBar, } from 'react-native'
+import { Alert, StatusBar, } from 'react-native'
 import { PersistGate } from 'redux-persist/integration/react'
 import { Provider } from 'react-redux'
 import React, { useEffect } from 'react'
@@ -9,7 +9,7 @@ import RootStackScreens from 'navigation'
 import Toast from "react-native-toast-message";
 import CodePush from "react-native-code-push";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
-
+import messaging from '@react-native-firebase/messaging';
 
 let CodePushOptions = {
   checkFrequency: CodePush.CheckFrequency.MANUAL,
@@ -20,6 +20,14 @@ const App = () => {
       updateDialog: { title: "A new update is Available" },
       installMode: CodePush.InstallMode.IMMEDIATE,
     }).catch((e) => Toast.show({ type: "error", text2: e }));
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+    });
+
+    return unsubscribe;
   }, []);
   return (
     <Provider store={Store().store}>

@@ -38,7 +38,7 @@ const ShowMoreScreen = () => {
             title == 'EXPLORE' ?
                 dispatch(AppThunks.getExploreArticles(1))
                 :
-                title == 'LATEST NEWS' ?
+                title == 'LATEST' ?
                     dispatch(AppThunks.getLatestArticles(1))
                     :
                     title == 'FEATURED' ?
@@ -63,7 +63,7 @@ const ShowMoreScreen = () => {
             title == 'EXPLORE' ?
                 dispatch(AppThunks.getExploreArticles(NextPage))
                 :
-                title == 'LATEST NEWS' ?
+                title == 'LATEST' ?
                     dispatch(AppThunks.getLatestArticles(NextPage))
                     :
                     title == 'FEATURED' ?

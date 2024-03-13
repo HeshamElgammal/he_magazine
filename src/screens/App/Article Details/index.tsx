@@ -53,7 +53,7 @@ const ArticleDetailScreen = () => {
                             <View style={DetailsStyle.ImagesContainer}>
                                 <View style={DetailsStyle.HeartContainer}>
                                     <View style={DetailsStyle.categryContainer}>
-                                        <Text style={DetailsStyle.categry}>{ArticleDetail?.labels?.slice(0, 1)}</Text>
+                                        <Text style={DetailsStyle.categry}>{ArticleDetail?.category?.name}</Text>
                                     </View>
                                     {
                                         IsAuth &&

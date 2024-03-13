@@ -58,7 +58,7 @@ const ExploreScreen = () => {
                     {
                         selectindex == -1 ?
                             <>
-                                <AppTitle text='LATEST NEWS' seemore />
+                                <AppTitle text='LATEST' seemore />
 
                                 <FirstItemsList loading={loading} data={ExploreData?.latest ? [...ExploreData?.latest]?.sort((a: any, b: any) => new Date(b?.date) - new Date(a?.date)) : []} />
 

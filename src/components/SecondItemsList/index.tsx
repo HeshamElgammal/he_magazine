@@ -99,7 +99,7 @@ const SecondItemsList = ({
                                                 </ImageBackground>
 
                                                 <View style={styles.categryContainer}>
-                                                    <Text style={styles.categry}>{item?.labels[0]}</Text>
+                                                    <Text style={styles.categry}>{item?.category?.name}</Text>
                                                 </View>
                                                 <Text numberOfLines={2} style={styles.Title}>{item?.title}</Text>
                                                 <View style={styles.divider} />

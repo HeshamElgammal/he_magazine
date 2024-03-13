@@ -188,6 +188,9 @@ interface appState {
                 image: "",
                 thumbnail_title: "",
                 content: "",
+                category: {
+                    name: ""
+                },
                 author: "",
                 date: "",
                 category_id: 0,
@@ -199,7 +202,7 @@ interface appState {
                 type: any,
                 gallery: [],
                 action_url: "",
-                file: ""
+                file: "",
             },
             gallery: [
                 {

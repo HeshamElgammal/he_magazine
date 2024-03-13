@@ -54,9 +54,9 @@ const PDFContent = ({
                                 <>
                                     <View style={DetailsStyle.ImagesContainer}>
                                         <View style={DetailsStyle.HeartContainer}>
-                                            {item?.model?.labels.length > 0 ?
+                                            {item?.model?.category?.name ?
                                                 <View style={DetailsStyle.categryContainer}>
-                                                    <Text style={DetailsStyle.categry}>{item?.model?.labels?.slice(0, 1)}</Text>
+                                                    <Text style={DetailsStyle.categry}>{item?.model?.category?.name}</Text>
                                                 </View>
                                                 :
                                                 <View />
