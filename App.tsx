@@ -11,11 +11,14 @@ import messaging from '@react-native-firebase/messaging';
 import { getToken, remoteMessage, requestPermissions, subscribeToTopic } from 'src/utils/HF';
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import DeviceInfo from 'react-native-device-info';
+import { GoogleAnalyticsTracker } from "react-native-google-analytics-bridge";
 
 
 
 const App = () => {
   const queryClient = new QueryClient();
+  let tracker = new GoogleAnalyticsTracker("G-WHN0YFGZ2Z");
+  tracker.trackScreenView("Home");
 
   useEffect(() => {
     subscribeToTopic()
